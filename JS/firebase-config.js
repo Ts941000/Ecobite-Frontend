@@ -1,10 +1,10 @@
 export const firebaseConfig = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_AUTH_DOMAIN",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID",
+  apiKey: "AIzaSyB9WnwgnHB7VRECKcsos3824C9sqATi8ag",
+  authDomain: "ecobite-hx.firebaseapp.com",
+  projectId: "ecobite-hx",
+  storageBucket: "ecobite-hx.firebasestorage.app",
+  messagingSenderId: "84907421623",
+  appId: "1:84907421623:web:5e4bfe774cc67795738232"
 };
 
 export const firebaseCollections = {
