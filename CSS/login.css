@@ -1,0 +1,360 @@
+/* ── RESET: remove default browser margin/padding from everything ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── BODY: full screen ── */
+    body {
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;          /* full screen height */
+      background: #f4faf5;
+    }
+    main {
+      display: flex;              /* puts left and right side by side */
+      min-height: 100vh;
+    }
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    .brand-icon { color: #4fcb7a; margin-right: 4px; }
+
+    /* ════════════════════════════════
+       LEFT SIDE — green branding panel
+    ════════════════════════════════ */
+    #left {
+      width: 45%;                 /* takes 45% of the screen */
+      background: linear-gradient(135deg, #0f2010, #1a3a1a, #0d2818);
+      display: flex;
+      flex-direction: column;     /* stack items top to bottom */
+      justify-content: center;    /* center vertically */
+      padding: 60px 48px;
+      position: relative;
+      overflow: hidden;           /* hides the blobs that go outside */
+    }
+
+    /* Decorative glowing green circle in background */
+    #blob {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(45,155,90,0.25), transparent 70%);
+      border-radius: 50%;
+      top: -80px; right: -80px;
+      pointer-events: none;       /* so it doesn't block clicks */
+    }
+
+    /* Logo text on the left panel */
+    #logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 30px; font-weight: 800;
+      color: white; margin-bottom: 48px;
+      text-decoration: none;
+      position: relative; z-index: 2; /* sit above the blob */
+      display: flex; align-items: center;
+    }
+    #logo > span:last-child { color: #4fcb7a; }  /* "Bite" in green */
+
+    /* Big headline on the left */
+    #slogan {
+      font-family: 'Syne', sans-serif;
+      font-size: 40px; font-weight: 800;
+      color: white; line-height: 1.15;
+      letter-spacing: -1px;
+      position: relative; z-index: 2;
+      margin-bottom: 20px;
+    }
+    #slogan span { color: #4fcb7a; }
+
+    /* Description text under the headline */
+    #desc {
+      color: rgba(255,255,255,0.6);
+      font-size: 16px; line-height: 1.7;
+      position: relative; z-index: 2;
+      margin-bottom: 48px;
+    }
+
+    /* Three feature points shown on the left panel */
+    #points { position: relative; z-index: 2; }
+    .point {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 16px;
+    }
+    .picon {
+      width: 40px; height: 40px;
+      background: rgba(45,155,90,0.2);
+      border: 1px solid rgba(45,155,90,0.4);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #7fd47b;
+    }
+    .ptext { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; }
+
+    /* ════════════════════════════════
+       RIGHT SIDE — the form panel
+    ════════════════════════════════ */
+    #right {
+      width: 55%;                 /* takes the remaining 55% */
+      display: flex;
+      align-items: center;        /* center form vertically */
+      justify-content: center;
+      padding: 48px 32px;
+    }
+
+    /* White box that holds the form */
+    #box {
+      background: white;
+      border-radius: 24px;
+      padding: 40px 44px;
+      width: 100%;
+      max-width: 480px;           /* don't let form get too wide */
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      border: 1px solid #e0ece0;
+    }
+
+    /* ── TABS: "Login" and "Signup" switcher ── */
+    #tabs {
+      display: flex;
+      background: #f0f7f0;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 32px;
+    }
+    .tab {
+      flex: 1;                    /* each tab takes equal width */
+      padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+      font-weight: 600; font-size: 15px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #6b7b6b;
+      font-family: 'Montserrat', sans-serif;
+      transition: all 0.2s;       /* smooth animation when switching */
+    }
+    /* Active tab looks white and bold */
+    .tab.on {
+      background: white;
+      color: #1a2e1a;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ── FORM TITLE ── */
+    #formtitle {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px; font-weight: 800;
+      color: #1a2e1a; margin-bottom: 6px;
+    }
+    #formsub { color: #6b7b6b; font-size: 14px; margin-bottom: 28px; }
+
+    /* ── FORMS: login and signup ── */
+    /* Only the active form is visible, other is hidden */
+    #loginform, #signupform { display: none; }
+    #loginform.show, #signupform.show { display: block; }
+
+    /* ── INPUT GROUPS ── */
+    .group { margin-bottom: 18px; }
+
+    /* Label above each input */
+    .group label {
+      display: block;             /* label on its own line */
+      font-size: 13px; font-weight: 600;
+      color: #3a4e3a; margin-bottom: 6px;
+    }
+
+    /* Input wrapper — holds icon + input side by side */
+    .inputwrap {
+      display: flex; align-items: center;
+      border: 2px solid #d8ead8;
+      border-radius: 12px;
+      padding: 0 14px;
+      background: #f9fdf9;
+      transition: border-color 0.2s;  /* border turns green when focused */
+    }
+    /* When input inside is focused, make the border green */
+    .inputwrap:focus-within { border-color: #2d9b5a; background: white; }
+
+    .inputwrap > span:first-child { margin-right: 8px; color: #6b7b6b; }  /* the icon */
+    .prefix {
+      color:#aaa;
+      font-size:14px;
+      padding-right:6px;
+      border-right:1px solid #ddd;
+      margin-right:8px;
+    }
+
+    .inputwrap input {
+      flex: 1;                    
+      width: 100%;       /* Add this to constrain width */
+      min-width: 0;      /* Add this to allow shrinking past default input size */
+      border: none; outline: none;
+      padding: 13px 0;
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+      background: transparent;
+      color: #1a2e1a;
+    }
+
+    /* Eye icon button to show/hide password */
+    .eye {
+      background: none; border: none;
+      cursor: pointer; font-size: 20px;
+      color: #8a9a8a; padding: 4px;
+    }
+
+    /* Error message shown below input when something is wrong */
+    .err {
+      color: #d4531c; font-size: 12px;
+      margin-top: 5px; display: none; /* hidden by default */
+    }
+    .err.show { display: block; }   /* shown when JS adds class "show" */
+
+    /* ── ROW: two inputs side by side (used in signup for name) ── */
+    .row { display: flex; gap: 14px; }
+    .row .group { flex: 1; }        /* each group takes equal width */
+
+    /* ── FORGOT PASSWORD LINK ── */
+    #forgot {
+      text-align: right; margin-bottom: 20px;
+      font-size: 13px; margin-top: -10px;
+    }
+    #forgot a { color: #2d9b5a; text-decoration: none; font-weight: 600; }
+
+    /* ── SUBMIT BUTTON ── */
+    .submit {
+      width: 100%;                /* full width */
+      padding: 14px;
+      background: #2d9b5a;
+      color: white; border: none;
+      border-radius: 12px;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 8px;
+    }
+    .submit:hover { background: #24834c; }
+    .submit:active { transform: scale(0.98); } /* slight shrink on click */
+
+    /* ── OR DIVIDER ── */
+    .divider {
+      display: flex; align-items: center;
+      gap: 12px; margin: 24px 0;
+      color: #aaa; font-size: 13px;
+    }
+    .divider::before, .divider::after {
+      content: "";                /* creates the horizontal lines */
+      flex: 1;
+      height: 1px; background: #e0ece0;
+    }
+
+    /* ── GOOGLE SIGN IN BUTTON ── */
+    .google {
+      width: 100%; padding: 13px;
+      background: white;
+      border: 2px solid #e0ece0;
+      border-radius: 12px;
+      font-size: 15px; font-weight: 600;
+      cursor: pointer; display: flex;
+      align-items: center; justify-content: center; gap: 10px;
+      font-family: 'Montserrat', sans-serif;
+      transition: border-color 0.2s, background 0.2s;
+      color: #1a2e1a;
+    }
+    .google:hover { border-color: #2d9b5a; background: #f4faf5; }
+    .googleicon {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    /* ── ROLE SELECTOR: User or Hotel ── */
+    #roles, #loginroles { display: flex; gap: 12px; margin-bottom: 20px; }
+    .role {
+      flex: 1; padding: 12px;
+      border: 2px solid #d8ead8;
+      border-radius: 12px; text-align: center;
+      cursor: pointer; transition: all 0.2s;
+      background: #f9fdf9;
+    }
+    .role:hover { border-color: #2d9b5a; }
+    /* Active role gets a green border and background */
+    .role.on { border-color: #2d9b5a; background: #edf7ed; }
+    .ricon { color: #2d9b5a; margin-bottom: 4px; }
+    .rname { font-size: 13px; font-weight: 600; color: #3a4e3a; }
+
+    /* ── CHECKBOX (Terms & Conditions) ── */
+    .checkrow {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 20px; margin-top: 4px;
+    }
+    .checkrow input[type="checkbox"] {
+      width: 17px; height: 17px;
+      accent-color: #2d9b5a;      
+      margin-top: 2px; cursor: pointer;
+      flex-shrink: 0;    /* Add this so the box doesn't warp */
+    }
+    .checkrow label { font-size: 13px; color: #6b7b6b; line-height: 1.5; }
+    .checkrow a { color: #2d9b5a; text-decoration: none; font-weight: 600; }
+
+    /* ── LOGIN TOAST ── */
+    .login-toast {
+      position: fixed;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a2e1a;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      z-index: 999;
+      transition: bottom 0.4s cubic-bezier(.22,.61,.36,1);
+      max-width: 90vw;
+    }
+    .login-toast.show {
+      bottom: 32px;
+    }
+    .login-toast .material-symbols-rounded {
+      color: #ff6b35;
+      font-size: 22px;
+    }
+
+    /* ── RESPONSIVE: stack on mobile ── */
+    @media (max-width: 768px) {
+      main { flex-direction: column; }
+      #left {
+        width: 100%;
+        padding: 32px 20px 28px;
+        min-height: auto;
+      }
+      #logo { font-size: 24px; margin-bottom: 20px; }
+      #slogan { font-size: 26px; letter-spacing: -0.5px; margin-bottom: 14px; }
+      #desc { font-size: 14px; margin-bottom: 28px; }
+      .point { gap: 10px; margin-bottom: 12px; }
+      .picon { width: 36px; height: 36px; font-size: 16px; }
+      .ptext { font-size: 13px; }
+
+      #right { width: 100%; padding: 20px 16px 36px; }
+      #box { padding: 24px 20px; border-radius: 18px; }
+      #formtitle { font-size: 22px; }
+      #formsub { font-size: 13px; margin-bottom: 22px; }
+      .row { flex-direction: column; gap: 0; }
+
+
+    }
+
+    @media (max-width: 400px) {
+      #left { padding: 24px 16px 20px; }
+      #slogan { font-size: 22px; }
+      #box { padding: 20px 14px; }
+      #roles { gap: 8px; }
+      .role { padding: 10px 8px; }
+      .ricon { font-size: 20px; }
+      .rname { font-size: 12px; }
+    }

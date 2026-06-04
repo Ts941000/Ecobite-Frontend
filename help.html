@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoBite — Help & Support</title>
+  <meta name="description"
+    content="EcoBite Help Center — Get answers to your questions about ordering rescued meals, deliveries, payments, refunds, and more." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Montserrat:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="CSS/help.css" />
+</head>
+
+<body>
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar">
+    <div id="navbox">
+      <a href="EcoBite.html" id="logo">
+        <span class="material-symbols-rounded brand-icon">eco</span>
+        Eco<span>Bite</span>
+      </a>
+      <div id="links">
+        <a href="EcoBite.html">Home</a>
+        <a href="EcoBite.html#listings">Hotels</a>
+        <a href="list-your-hotel.html">List Your Hotel</a>
+        <a href="login.html" id="loginLink">Login</a>
+      </div>
+      <button id="hamburger" aria-label="Menu">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobileMenu">
+    <a href="EcoBite.html" class="mobile-menu-link">Home</a>
+    <a href="EcoBite.html#listings" class="mobile-menu-link">Hotels</a>
+    <a href="list-your-hotel.html" class="mobile-menu-link">List Your Hotel</a>
+    <a href="login.html" class="mobile-menu-link">Login</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div id="blob1"></div>
+    <div id="blob2"></div>
+    <div id="heroContent">
+      <div id="heroPill">
+        <span class="material-symbols-rounded">support_agent</span>
+        We're here 24/7
+      </div>
+      <h1 id="heroTitle">How can we<br><span>help you?</span></h1>
+      <p id="heroSub">Search our knowledge base or browse categories below</p>
+      <div id="searchWrap">
+        <span class="material-symbols-rounded">search</span>
+        <input type="text" id="helpSearch" placeholder="Search for help topics..." />
+        <button id="searchBtn">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SUPPORT CATEGORIES ── -->
+  <section id="categories">
+    <h2 class="section-title">Support Categories</h2>
+    <p class="section-sub">Choose a topic and find instant answers</p>
+    <div id="catGrid">
+      <a href="#faq" class="cat-card">
+        <div class="cat-icon"><span class="material-symbols-rounded">local_shipping</span></div>
+        <h3>Orders & Delivery</h3>
+        <p>Track orders, delivery status, and timing</p>
+      </a>
+      <a href="#faq" class="cat-card">
+        <div class="cat-icon payments"><span class="material-symbols-rounded">payments</span></div>
+        <h3>Payments & Refunds</h3>
+        <p>Payment methods, refund policies, billing</p>
+      </a>
+      <a href="#faq" class="cat-card">
+        <div class="cat-icon account"><span class="material-symbols-rounded">person</span></div>
+        <h3>Account & Profile</h3>
+        <p>Login issues, profile settings, preferences</p>
+      </a>
+      <a href="#faq" class="cat-card">
+        <div class="cat-icon partner"><span class="material-symbols-rounded">hotel</span></div>
+        <h3>Partner Hotels</h3>
+        <p>Hotel onboarding, dashboard, listings</p>
+      </a>
+      <a href="#faq" class="cat-card">
+        <div class="cat-icon tech"><span class="material-symbols-rounded">build</span></div>
+        <h3>Technical Issues</h3>
+        <p>App bugs, loading errors, connectivity</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FAQ ACCORDION ── -->
+  <section id="faq">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-sub">Quick answers to common queries</p>
+    <div id="faqList">
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How does EcoBite work?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            EcoBite connects you with top hotels and restaurants in your city that have surplus meals available. These are freshly prepared dishes that would otherwise go to waste. You can browse available deals, place an order at up to 80% off the original price, and get it delivered right to your doorstep. Every meal you rescue helps reduce food waste and supports a sustainable food ecosystem.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I track my order?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Once you place an order, you can track it in real-time from the <strong>"My Orders"</strong> page. Each order shows its current status — Pending, Accepted, Out for Delivery, or Completed. You'll also receive push notifications and SMS updates at every stage. If the hotel accepts your order, you'll see the estimated preparation time displayed on your order card.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What payment methods are accepted?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            EcoBite supports a wide range of payment options for your convenience:
+            <ul>
+              <li><strong>UPI:</strong> Google Pay, PhonePe, Paytm, BHIM</li>
+              <li><strong>Cards:</strong> Visa, Mastercard, RuPay (credit & debit)</li>
+              <li><strong>Wallets:</strong> Paytm Wallet, Amazon Pay</li>
+              <li><strong>Net Banking:</strong> All major Indian banks</li>
+              <li><strong>Cash on Delivery (COD):</strong> Available in select cities</li>
+            </ul>
+            All transactions are encrypted and secured with industry-standard SSL protection.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Can I cancel my order?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Yes, you can cancel your order as long as the hotel hasn't started preparing it. Go to <strong>"My Orders"</strong>, find the active order, and tap the <strong>"Cancel"</strong> button. If the order status is still "Pending," you'll receive a full refund within 2-3 business days. Once the order is marked as "Accepted" and preparation has begun, cancellation may not be available or may incur a partial charge.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How is food quality ensured?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Food quality is our top priority. Every partner hotel on EcoBite goes through a rigorous verification process. We check FSSAI licenses, kitchen hygiene standards, and customer reviews before onboarding. The surplus meals listed are freshly prepared dishes from the same day — never leftover or stale food. Our quality assurance team conducts regular audits and all partners must maintain a minimum 4.0-star rating to continue listing on the platform.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What is the refund policy?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            EcoBite offers a hassle-free refund policy:
+            <ul>
+              <li><strong>Order cancelled before acceptance:</strong> 100% refund within 2-3 business days</li>
+              <li><strong>Quality issues:</strong> Report within 30 minutes of delivery with photos for a full refund or re-delivery</li>
+              <li><strong>Missing items:</strong> Proportional refund for missing dishes</li>
+              <li><strong>Delivery not received:</strong> Full refund after verification</li>
+            </ul>
+            Refunds are credited to the original payment method. UPI refunds are typically instant, while card refunds may take 5-7 business days.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I become a hotel partner?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Becoming an EcoBite partner is simple and free:
+            <ol>
+              <li>Visit our <a href="list-your-hotel.html">List Your Hotel</a> page</li>
+              <li>Click "Get Started" and create a hotel account</li>
+              <li>Submit your FSSAI license, restaurant photos, and menu details</li>
+              <li>Our team verifies your application within 24-48 hours</li>
+              <li>Once approved, start listing your surplus dishes and earning!</li>
+            </ol>
+            Over 840+ hotels across 32 cities are already earning extra revenue while reducing food waste with EcoBite.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do I contact support?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Our support team is available 24/7 to help you:
+            <ul>
+              <li><strong>Email:</strong> <a href="mailto:support@ecobite.in">support@ecobite.in</a> — typical response time under 2 hours</li>
+              <li><strong>Phone:</strong> <a href="tel:+911800ECOBITE">1800-ECO-BITE (1800-326-2483)</a> — toll-free, 24/7</li>
+              <li><strong>In-App Chat:</strong> Use the AI chat widget on any page for instant answers</li>
+              <li><strong>Social Media:</strong> DM us on Instagram or Twitter @EcoBiteIndia</li>
+            </ul>
+            For order-related issues, please keep your Order ID handy for faster resolution.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Is EcoBite available in my city?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            EcoBite is currently active in <strong>32 cities</strong> across India, including Delhi, Mumbai, Bengaluru, Hyderabad, Chennai, Pune, Kolkata, Jaipur, Ahmedabad, and more. We're expanding rapidly — enter your pincode on the homepage to check availability. If we're not in your city yet, join our waitlist and be the first to know when we launch near you!
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What are the delivery charges?</span>
+          <span class="material-symbols-rounded faq-arrow">expand_more</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            EcoBite offers <strong>free delivery</strong> on orders above ₹149. For orders below ₹149, a flat delivery fee of ₹29 is charged. During heavy rain or extreme weather, a nominal surge fee may apply. There are no hidden charges — what you see at checkout is what you pay. Premium EcoBite members enjoy free delivery on all orders regardless of amount.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CONTACT SUPPORT ── -->
+  <section id="contact">
+    <div id="contactBox">
+      <div class="contact-card">
+        <div class="contact-icon"><span class="material-symbols-rounded">mail</span></div>
+        <h3>Email Us</h3>
+        <p>Get a detailed response within 2 hours</p>
+        <a href="mailto:support@ecobite.in" class="contact-link">support@ecobite.in</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon phone"><span class="material-symbols-rounded">call</span></div>
+        <h3>Call Us</h3>
+        <p>Toll-free, available 24/7</p>
+        <a href="tel:+911800ECOBITE" class="contact-link">1800-ECO-BITE</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon chat"><span class="material-symbols-rounded">smart_toy</span></div>
+        <h3>AI Chat</h3>
+        <p>Instant answers, anytime</p>
+        <button class="contact-link chat-btn" onclick="window.history.back()">Open Chat Widget</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer id="footer">
+    <div id="footbox">
+      <div id="footlogo">
+        <span class="material-symbols-rounded brand-icon">eco</span>
+        Eco<span>Bite</span>
+      </div>
+      <p id="footsub">Fighting food waste, one meal at a time.</p>
+      <div id="footlinks">
+        <a href="EcoBite.html">Home</a>
+        <a href="list-your-hotel.html">Partner</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Blog</a>
+        <a href="#">Privacy</a>
+      </div>
+      <div id="copy">(c) 2026 EcoBite India Pvt. Ltd. Made for a sustainable India</div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Hamburger Menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger?.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('#mobileMenu a').forEach(a =>
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'))
+    );
+
+    // ── FAQ Accordion ──
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+
+        // Close all other items
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+          if (openItem !== item) {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+            openItem.querySelector('.faq-answer').style.maxHeight = null;
+          }
+        });
+
+        // Toggle current
+        if (isOpen) {
+          item.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          answer.style.maxHeight = null;
+        } else {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // ── Search Filter ──
+    const searchInput = document.getElementById('helpSearch');
+    const searchBtn = document.getElementById('searchBtn');
+
+    function filterFAQ() {
+      const query = searchInput.value.toLowerCase().trim();
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+    searchBtn?.addEventListener('click', filterFAQ);
+    searchInput?.addEventListener('keyup', e => { if (e.key === 'Enter') filterFAQ(); });
+    searchInput?.addEventListener('input', () => { if (!searchInput.value) filterFAQ(); });
+
+    // ── Scroll Reveal ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+
+</html>

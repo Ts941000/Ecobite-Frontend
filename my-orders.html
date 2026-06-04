@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoBite — My Orders</title>
+  <meta name="description" content="View and track your EcoBite orders in real-time. See order history, status updates, and delivery details." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Montserrat:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="CSS/my-orders.css" />
+</head>
+
+<body>
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar">
+    <div id="navbox">
+      <a href="EcoBite.html" id="logo">
+        <span class="material-symbols-rounded brand-icon">eco</span>
+        Eco<span>Bite</span>
+      </a>
+      <div id="links">
+        <a href="EcoBite.html">Home</a>
+        <a href="EcoBite.html#listings">Hotels</a>
+        <a href="my-address.html">My Addresses</a>
+        <a href="help.html">Help</a>
+      </div>
+      <div id="right">
+        <div id="profileWrap">
+          <button id="profileBtn" aria-label="Profile menu">
+            <span id="profileAvatar"></span>
+            <span id="profileName"></span>
+            <span class="material-symbols-rounded profileArrow">expand_more</span>
+          </button>
+          <div id="profileDropdown">
+            <div id="profileHeader">
+              <div id="profileBigAvatar"></div>
+              <div>
+                <div id="profileFullName"></div>
+                <div id="profileEmail"></div>
+              </div>
+            </div>
+            <div class="profileDivider"></div>
+            <a class="profileItem" href="my-orders.html">
+              <span class="material-symbols-rounded">restaurant</span> My Orders
+            </a>
+            <a class="profileItem" href="my-address.html">
+              <span class="material-symbols-rounded">location_on</span> My Addresses
+            </a>
+            <a class="profileItem" href="help.html">
+              <span class="material-symbols-rounded">help</span> Help
+            </a>
+            <div class="profileDivider"></div>
+            <button class="profileItem" id="logoutBtn">
+              <span class="material-symbols-rounded">logout</span> Logout
+            </button>
+          </div>
+        </div>
+        <button id="hamburger" aria-label="Menu">
+          <span class="material-symbols-rounded">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobileMenu">
+    <a href="EcoBite.html" class="mobile-menu-link">Home</a>
+    <a href="EcoBite.html#listings" class="mobile-menu-link">Hotels</a>
+    <a href="my-address.html" class="mobile-menu-link">My Addresses</a>
+    <a href="help.html" class="mobile-menu-link">Help</a>
+  </div>
+
+  <!-- ── PAGE CONTENT ── -->
+  <main id="main">
+    <div id="pageHeader">
+      <div>
+        <h1 id="pageTitle">My Orders</h1>
+        <p id="pageSub">Track and manage your EcoBite orders</p>
+      </div>
+    </div>
+
+    <!-- ── FILTER TABS ── -->
+    <div id="filterTabs">
+      <button class="filter-tab active" data-filter="all">
+        <span class="material-symbols-rounded">list</span> All
+      </button>
+      <button class="filter-tab" data-filter="pending">
+        <span class="material-symbols-rounded">schedule</span> Pending
+      </button>
+      <button class="filter-tab" data-filter="accepted">
+        <span class="material-symbols-rounded">thumb_up</span> Accepted
+      </button>
+      <button class="filter-tab" data-filter="completed">
+        <span class="material-symbols-rounded">check_circle</span> Completed
+      </button>
+      <button class="filter-tab" data-filter="cancelled">
+        <span class="material-symbols-rounded">cancel</span> Cancelled
+      </button>
+    </div>
+
+    <!-- ── ORDERS CONTAINER ── -->
+    <div id="ordersContainer">
+      <div id="loadingState" class="state-box">
+        <div class="loader"></div>
+        <p>Loading your orders...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer id="footer">
+    <div id="footbox">
+      <div id="footlogo">
+        <span class="material-symbols-rounded brand-icon">eco</span>
+        Eco<span>Bite</span>
+      </div>
+      <p id="footsub">Fighting food waste, one meal at a time.</p>
+      <div id="footlinks">
+        <a href="EcoBite.html">Home</a>
+        <a href="list-your-hotel.html">Partner</a>
+        <a href="help.html">Help</a>
+        <a href="#">Privacy</a>
+      </div>
+      <div id="copy">(c) 2026 EcoBite India Pvt. Ltd. Made for a sustainable India</div>
+    </div>
+  </footer>
+
+  <script type="module" src="JS/my-orders.js"></script>
+</body>
+
+</html>
