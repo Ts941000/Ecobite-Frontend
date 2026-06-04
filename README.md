@@ -88,6 +88,3 @@ EcoBite/
     home-mobile.png
 ```
 
-## Notes
-
-Payments are still simulated in the UI. For real money movement, connect a payment gateway such as Razorpay or Stripe through a trusted server or Firebase Cloud Functions.
