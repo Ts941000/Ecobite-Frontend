@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Order — EcoBite</title>
+  <meta name="description" content="Track your EcoBite food delivery in real-time on a live map." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Montserrat:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <link rel="stylesheet" href="CSS/order-tracking.css" />
+</head>
+<body>
+  <nav id="trackNav">
+    <a href="my-orders.html" class="back-btn">
+      <span class="material-symbols-rounded">arrow_back</span>
+    </a>
+    <div class="nav-title">
+      <span class="material-symbols-rounded brand-icon">eco</span>
+      Order Tracking
+    </div>
+    <div class="nav-order-id" id="navOrderId"></div>
+  </nav>
+
+  <div id="mapContainer">
+    <div id="trackMap"></div>
+    <div id="etaBadge">
+      <span class="material-symbols-rounded">schedule</span>
+      <span id="etaText">Calculating...</span>
+    </div>
+  </div>
+
+  <div id="trackingPanel">
+    <div id="statusCard">
+      <div class="status-header">
+        <div class="status-icon-big" id="statusIconBig">
+          <span class="material-symbols-rounded">restaurant</span>
+        </div>
+        <div>
+          <div class="status-title" id="statusTitle">Preparing your order</div>
+          <div class="status-sub" id="statusSub">Your food is being prepared with care</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="timeline">
+      <div class="tl-step done" id="tl-confirmed">
+        <div class="tl-dot"><span class="material-symbols-rounded">check</span></div>
+        <div class="tl-info">
+          <div class="tl-label">Order Confirmed</div>
+          <div class="tl-time" id="tl-confirmed-time"></div>
+        </div>
+      </div>
+      <div class="tl-step" id="tl-preparing">
+        <div class="tl-dot"><span class="material-symbols-rounded">skillet</span></div>
+        <div class="tl-info">
+          <div class="tl-label">Preparing Food</div>
+          <div class="tl-time" id="tl-preparing-time"></div>
+        </div>
+      </div>
+      <div class="tl-step" id="tl-pickup">
+        <div class="tl-dot"><span class="material-symbols-rounded">local_shipping</span></div>
+        <div class="tl-info">
+          <div class="tl-label">Out for Delivery</div>
+          <div class="tl-time" id="tl-pickup-time"></div>
+        </div>
+      </div>
+      <div class="tl-step" id="tl-delivered">
+        <div class="tl-dot"><span class="material-symbols-rounded">home</span></div>
+        <div class="tl-info">
+          <div class="tl-label">Delivered</div>
+          <div class="tl-time" id="tl-delivered-time"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deliveryCard">
+      <div class="delivery-header">Delivery Partner</div>
+      <div class="delivery-info">
+        <div class="delivery-avatar">
+          <span class="material-symbols-rounded">directions_bike</span>
+        </div>
+        <div>
+          <div class="delivery-name">EcoBite Delivery</div>
+          <div class="delivery-vehicle">Two-Wheeler · Fast Delivery</div>
+        </div>
+        <a href="tel:+919876543210" class="delivery-call">
+          <span class="material-symbols-rounded">call</span>
+        </a>
+      </div>
+    </div>
+
+    <div id="orderSummaryCard">
+      <div class="summary-header">Order Summary</div>
+      <div id="orderItems"></div>
+      <div class="summary-total" id="orderTotal"></div>
+    </div>
+  </div>
+
+  <script type="module" src="JS/order-tracking.js"></script>
+</body>
+</html>
