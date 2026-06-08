@@ -9,7 +9,7 @@ import {
   uploadListingImage,
 } from "./firebase-service.js";
 
-const currentUser = await requireAuth("login.html", ["hotel"]);
+const currentUser = await requireAuth("login.html", ["admin"]);
 
 function escapeHtml(str) {
   return String(str ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));

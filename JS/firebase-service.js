@@ -40,13 +40,15 @@ function writeJson(key, value) {
 
 function localUserFromProfile(profile) {
   if (!profile) return null;
+  let role = profile.role || "user";
+  if (role === "hotel" || role === "Admin") role = "admin";
   return {
     loggedIn: true,
     uid: profile.uid || `local-${profile.email || Date.now()}`,
     email: profile.email || "",
     name: profile.name || profile.displayName || (profile.email || "User").split("@")[0],
     phone: profile.phone || "",
-    role: profile.role || "user",
+    role: role,
     provider: profile.provider || "local",
     photoURL: profile.photoURL || "",
     timestamp: Date.now(),
@@ -106,12 +108,14 @@ export async function initFirebase() {
 
 function mapFirebaseUser(user, profile = {}) {
   if (!user) return null;
+  let role = profile.role || "user";
+  if (role === "hotel" || role === "Admin") role = "admin";
   return {
     uid: user.uid,
     email: user.email || profile.email || "",
     name: profile.name || user.displayName || (user.email || "User").split("@")[0],
     phone: profile.phone || user.phoneNumber || "",
-    role: profile.role || "user",
+    role: role,
     provider: user.providerData?.[0]?.providerId || "password",
     photoURL: user.photoURL || profile.photoURL || "",
   };
