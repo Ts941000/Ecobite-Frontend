@@ -510,7 +510,7 @@ async function placeOrder() {
   // Razorpay test-mode checkout for UPI / Card
   if (typeof Razorpay !== "undefined") {
     const options = {
-      key: "rzp_test_EcoBiteDemo2026",
+      key: "rzp_test_SzCbJUTQSDi1uE",
       amount: total * 100, // Razorpay expects paise
       currency: "INR",
       name: "EcoBite",

@@ -441,7 +441,7 @@ export async function listenOrders(callback) {
   const { collection, onSnapshot, orderBy, query } = sdk.firestoreModule;
   return onSnapshot(
     query(collection(db, firebaseCollections.orders), orderBy("createdAtMs", "desc")),
-    (snap) => callback(snap.docs.map((entry) => ({ id: entry.id, ...entry.data() }))),
+    (snap) => callback(snap.docs.map((entry) => ({ ...entry.data(), id: entry.id }))),
     (error) => {
       console.error("Order subscription failed:", error);
       callback([]);

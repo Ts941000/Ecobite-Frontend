@@ -17,16 +17,14 @@ function escapeHtml(str) {
 
 try {
   const savedSettings = JSON.parse(localStorage.getItem('ecobite-hotel-settings'));
-  if (savedSettings) {
-    if (savedSettings.hotel) {
-      document.getElementById('settingHotelName').value = savedSettings.hotel;
-      document.getElementById('hotelname').innerHTML = `<span class="material-symbols-rounded">hotel</span> ${savedSettings.hotel}`;
-    }
-    if (savedSettings.verified) {
-      document.getElementById('settingVerified').checked = true;
-      document.getElementById('hotelbadge').innerHTML = `<span class="material-symbols-rounded">verified</span> ${savedSettings.badge || 'Verified Partner'}`;
-      document.getElementById('hotelbadge').style.display = '';
-    }
+  if (savedSettings && savedSettings.hotel) {
+    document.getElementById('settingHotelName').value = savedSettings.hotel;
+    document.getElementById('settingHotelName').readOnly = true;
+    document.getElementById('settingHotelName').style.opacity = '0.7';
+    document.getElementById('settingHotelName').style.cursor = 'not-allowed';
+    const lockedMsg = document.getElementById('hotelNameLockedMsg');
+    if (lockedMsg) lockedMsg.style.display = '';
+    document.getElementById('hotelnameText').textContent = savedSettings.hotel;
   }
 } catch (e) { /* ignore */ }
 
@@ -333,14 +331,31 @@ async function saveListing() {
 
   if (imageFile) {
     try {
-      image = await uploadListingImage(imageFile) || image;
+      const uploadPromise = uploadListingImage(imageFile);
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Upload timeout')), 15000)
+      );
+      image = await Promise.race([uploadPromise, timeoutPromise]) || image;
     } catch (error) {
       console.error("Image upload failed:", error);
-      // Fallback to base64
+      // Fallback to compressed base64
       try {
         image = await new Promise((resolve) => {
           const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
+          reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const MAX = 400;
+              let w = img.width, h = img.height;
+              if (w > MAX) { h *= MAX / w; w = MAX; }
+              canvas.width = w; canvas.height = h;
+              canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+              resolve(canvas.toDataURL('image/jpeg', 0.5));
+            };
+            img.onerror = () => resolve(image);
+            img.src = e.target.result;
+          };
           reader.onerror = () => resolve(image);
           reader.readAsDataURL(imageFile);
         });
@@ -351,7 +366,7 @@ async function saveListing() {
   }
 
   const hotel = document.getElementById("settingHotelName").value.trim()
-    || document.getElementById("hotelname").textContent.trim()
+    || document.getElementById("hotelnameText")?.textContent?.trim()
     || "EcoBite Partner";
   const listingPayload = {
     id: editId,
@@ -602,18 +617,38 @@ document.getElementById("fimagefile").addEventListener("change", (event) => {
 });
 
 document.getElementById("saveSettingsBtn").addEventListener("click", () => {
-  const hotel = document.getElementById("settingHotelName").value.trim() || "EcoBite Partner";
-  const badge = document.getElementById("settingHotelBadge").value.trim() || "Verified Partner";
-  const verified = document.getElementById("settingVerified").checked;
-  document.getElementById("hotelname").innerHTML = `<span class="material-symbols-rounded">hotel</span> ${hotel}`;
-  if (verified) {
-    document.getElementById("hotelbadge").innerHTML = `<span class="material-symbols-rounded">verified</span> ${badge}`;
-    document.getElementById("hotelbadge").style.display = "";
-  } else {
-    document.getElementById("hotelbadge").style.display = "none";
+  const hotelInput = document.getElementById("settingHotelName");
+  const hotel = hotelInput.value.trim();
+
+  // If already locked, don't allow re-save
+  if (hotelInput.readOnly) {
+    showToast("Hotel name is already set", "lock");
+    return;
   }
-  localStorage.setItem('ecobite-hotel-settings', JSON.stringify({ hotel, badge, verified }));
-  showToast("Settings saved");
+
+  // Validate mandatory hotel name
+  if (!hotel) {
+    const errEl = document.getElementById("ferr-hotelname");
+    if (errEl) errEl.style.display = "";
+    showToast("Please enter your hotel name", "error");
+    return;
+  }
+  const errEl = document.getElementById("ferr-hotelname");
+  if (errEl) errEl.style.display = "none";
+
+  // Update sidebar display
+  document.getElementById("hotelnameText").textContent = hotel;
+
+  // Lock the field permanently
+  hotelInput.readOnly = true;
+  hotelInput.style.opacity = '0.7';
+  hotelInput.style.cursor = 'not-allowed';
+  const lockedMsg = document.getElementById('hotelNameLockedMsg');
+  if (lockedMsg) lockedMsg.style.display = '';
+
+  // Persist to localStorage
+  localStorage.setItem('ecobite-hotel-settings', JSON.stringify({ hotel }));
+  showToast("Hotel name saved successfully");
 });
 
 // ── Real-time listeners ──

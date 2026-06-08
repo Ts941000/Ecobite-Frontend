@@ -599,7 +599,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(45,155,90,0.3);
 }
-.social-link .material-symbols-rounded { font-size: 20px; }
+.social-link svg { width: 20px; height: 20px; fill: currentColor; }
 #copy { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; color: rgba(255,255,255,0.35); font-size: 13px; }
 
 /* ── SCROLL REVEAL ── */

@@ -31,12 +31,8 @@
     <div id="hotelinfo">
       <div id="hotelname">
         <span class="material-symbols-rounded">hotel</span>
-        Taj Palace Hotel
+        <span id="hotelnameText">Set up your hotel</span>
       </div>
-      <span id="hotelbadge">
-        <span class="material-symbols-rounded">verified</span>
-        Verified Partner
-      </span>
     </div>
 
     <div id="menu">
@@ -200,28 +196,16 @@
     <div class="panel" id="panel-settings">
       <div class="formbox">
         <h3>Hotel Settings</h3>
-        <p>Update the hotel name shown in the dashboard and on the customer page.</p>
+        <p>Set your hotel name. This will appear on the dashboard and customer-facing listings.</p>
 
         <div class="fgrid">
           <div class="fgroup full">
-            <label for="settingHotelName">Hotel Name</label>
-            <input type="text" id="settingHotelName" placeholder="Taj Palace Hotel" />
-          </div>
-          <div class="fgroup full">
-            <label for="settingHotelBadge">Partner Badge</label>
-            <input type="text" id="settingHotelBadge" placeholder="Verified Partner" />
-          </div>
-          <div class="fgroup full">
-            <div class="verified-badge-row">
-              <span class="material-symbols-rounded verified-icon">verified</span>
-              <div>
-                <div class="verified-title">Verified Partner Badge</div>
-                <div class="verified-desc">Display a verified badge on your dashboard and customer-facing listings.</div>
-              </div>
-              <label class="toggle-switch">
-                <input type="checkbox" id="settingVerified" checked />
-                <span class="toggle-slider"></span>
-              </label>
+            <label for="settingHotelName">Hotel Name <span class="freq">*</span></label>
+            <input type="text" id="settingHotelName" placeholder="Enter your hotel name" />
+            <div class="ferr" id="ferr-hotelname" style="display:none;">Hotel name is required</div>
+            <div id="hotelNameLockedMsg" style="display:none; margin-top:8px; font-size:13px; color:#2d9b5a; font-weight:600;">
+              <span class="material-symbols-rounded" style="font-size:16px; vertical-align:middle;">lock</span>
+              Hotel name has been set and cannot be changed.
             </div>
           </div>
         </div>

@@ -617,6 +617,7 @@ img { max-width: 100%; display: block; }
   border-color: rgba(45,155,90,0.3);
   transform: translateY(-3px);
 }
+.footer-social a svg { width: 20px; height: 20px; fill: currentColor; }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: 28px;

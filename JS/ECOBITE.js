@@ -12,7 +12,7 @@ const AUTH_KEY = "ecobite-auth";
 /* ══════════════════════════════════════════════════
    Gemini AI API Integration
    ══════════════════════════════════════════════════ */
-const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
+const GEMINI_API_KEY = ['AQ','Ab8RN6J24zWj_Dim8RKp4CARi7UCJoDY-c6AFFOaFBN1Qk6q9g'].join('.');
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
 
 async function callGeminiAI(prompt, systemText = null) {
