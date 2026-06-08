@@ -42,8 +42,10 @@ const allFoodItems = [
   { id: "butter-chicken-thali", name: "Butter Chicken Thali", hotel: "Taj Palace Hotel", place: "Connaught Place, Delhi", type: "Non-Veg", original: 450, sale: 149, time: "28-35 min", image: "FOOD IMAGES/butterchickhen.jpg.jpeg" },
   { id: "chicken-biryani", name: "Chicken Biryani", hotel: "Royal Biryani House", place: "Banjara Hills, Hyderabad", type: "Non-Veg", original: 399, sale: 129, time: "32-40 min", image: "FOOD IMAGES/chickenbiryani.jpg.jpeg" },
   { id: "dal-makhani", name: "Dal Makhani Combo", hotel: "Punjabi Rasoi", place: "Andheri West, Mumbai", type: "Veg", original: 320, sale: 99, time: "25-30 min", image: "FOOD IMAGES/dm.jpg.jpeg" },
-  { id: "paneer-butter-masala", name: "Paneer Butter Masala", hotel: "Green Leaf Kitchen", place: "Indiranagar, Bengaluru", type: "Veg", original: 360, sale: 119, time: "30-38 min", image: "FOOD IMAGES/pbm.jpg.jpeg" },
+  { id: "paneer-butter-masala", name: "Paneer Butter Masala", hotel: "Green Leaf Kitchen", place: "Indiranagar, Bengaluru", type: "Veg", original: 360, sale: 119, time: "30-38 min", image: "FOOD IMAGES/PBM.jpg" },
   { id: "rajma-rice", name: "Rajma Rice Bowl", hotel: "Home Plate Co.", place: "C-Scheme, Jaipur", type: "Veg", original: 240, sale: 79, time: "22-28 min", image: "FOOD IMAGES/rajma.jpg.jpeg" },
+  { id: "malai-chaap", name: "Malai Chaap", hotel: "Delhi Darbar", place: "Karol Bagh, Delhi", type: "Veg", original: 280, sale: 89, time: "20-25 min", image: "FOOD IMAGES/MALAI CHAAP.avif" },
+  { id: "paneer-tikka", name: "Paneer Tikka", hotel: "Tikka Town", place: "Koramangala, Bengaluru", type: "Veg", original: 300, sale: 109, time: "25-30 min", image: "FOOD IMAGES/PANEER TIKKA.webp" },
 ];
 
 function getCart() {

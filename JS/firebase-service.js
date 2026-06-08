@@ -205,7 +205,7 @@ export async function loginWithGoogle(role = "user") {
   if (!isFirebaseConfigured()) {
     return saveLocalAuth({
       email: "demo.user@ecobite.local",
-      name: role === "hotel" ? "Demo Hotel Partner" : "Demo User",
+      name: role === "admin" ? "Demo Hotel Partner" : "Demo User",
       role,
       provider: "demo-google",
     });

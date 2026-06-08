@@ -8,16 +8,16 @@ import {
 
 let role = "user";
 
-// Support ?role=hotel deep link from "List Your Hotel" page
+// Support ?role=admin deep link from "List Your Hotel" page
 const urlParams = new URLSearchParams(window.location.search);
 const urlRole = urlParams.get("role");
-if (urlRole === "Admin") {
-  role = "Admin";
-  // Auto-switch to signup tab with hotel role pre-selected on next tick
+if (urlRole === "admin" || urlRole === "Admin") {
+  role = "admin";
+  // Auto-switch to signup tab with admin role pre-selected on next tick
   setTimeout(() => {
     showTab("signup");
-    setRole("Admin", "signup");
-    setRole("Admin", "login");
+    setRole("admin", "signup");
+    setRole("admin", "login");
   }, 0);
 }
 
@@ -36,13 +36,13 @@ function showTab(tab) {
 function setRole(nextRole, mode) {
   role = nextRole;
   const userId = mode === "login" ? "luserrole" : "userrole";
-  const hotelId = mode === "login" ? "lAdminrole" : "Adminrole";
+  const adminId = mode === "login" ? "ladminrole" : "adminrole";
   document.getElementById(userId).classList.toggle("on", role === "user");
-  document.getElementById(hotelId).classList.toggle("on", role === "Admin");
-  // Toggle FSSAI field visibility for hotel signup
+  document.getElementById(adminId).classList.toggle("on", role === "admin");
+  // Toggle FSSAI field visibility for admin signup
   const fssaiGroup = document.getElementById("fssaiGroup");
   if (fssaiGroup) {
-    fssaiGroup.style.display = (mode === "signup" && nextRole === "Admin") ? "" : "none";
+    fssaiGroup.style.display = (mode === "signup" && nextRole === "admin") ? "" : "none";
   }
 }
 
@@ -75,7 +75,7 @@ function setBusy(form, busy) {
 }
 
 function redirectByRole(authState) {
-  window.location.href = authState.role === "Admin" ? "dashboard.html" : "EcoBite.html";
+  window.location.href = authState.role === "admin" ? "dashboard.html" : "EcoBite.html";
 }
 
 function friendlyAuthError(error) {
@@ -104,8 +104,9 @@ async function validateLogin(event) {
     const authState = await loginWithEmail({ email, password: pass, role });
     // Check if the user's actual account role differs from selected login role
     if (authState.role && authState.role !== role) {
-      const correctRoleLabel = authState.role === 'Admin' ? 'Admin' : 'User';
-      showAuthMsg(`This is a ${correctRoleLabel} account. Please choose "I'm a ${correctRoleLabel}" to continue.`, "switch_account");
+      const correctRoleLabel = authState.role === 'admin' ? 'Admin' : 'User';
+      const article = authState.role === 'admin' ? 'an' : 'a';
+      showAuthMsg(`This is a ${correctRoleLabel} account. Please choose "I'm ${article} ${correctRoleLabel}" to continue.`, "switch_account");
       // Auto-switch role selectors to the correct role
       setRole(authState.role, 'login');
       setBusy(form, false);
@@ -137,7 +138,7 @@ async function validateSignup(event) {
     phoneerr: !/^\d{10}$/.test(phone),
     spasserr: pass.length < 6,
     termserr: !terms,
-    fssaierr: role === "Admin" && !/^\d{14}$/.test(fssai),
+    fssaierr: role === "admin" && !/^\d{14}$/.test(fssai),
   };
 
   Object.entries(checks).forEach(([id, visible]) => err(id, visible));
@@ -146,7 +147,7 @@ async function validateSignup(event) {
   setBusy(form, true);
   try {
     const name = [fname, lname].filter(Boolean).join(" ");
-    const extra = role === "Admin" ? { fssaiLicense: fssai } : {};
+    const extra = role === "admin" ? { fssaiLicense: fssai } : {};
     const authState = await registerWithEmail({ email, password: pass, name, phone, role, ...extra });
     const mode = getBackendMode() === "firebase" ? "Firebase" : "demo";
     showAuthMsg(`Account created with ${mode} backend.`, "person_add");
@@ -180,8 +181,9 @@ document.querySelectorAll("[data-google-action]").forEach((button) => {
     try {
       const authState = await loginWithGoogle(role);
       if (authState.role && authState.role !== role) {
-        const correctRoleLabel = authState.role === 'Admin' ? 'Admin' : 'User';
-        showAuthMsg(`This is a ${correctRoleLabel} account. Please choose "I'm a ${correctRoleLabel}" to continue.`, "switch_account");
+        const correctRoleLabel = authState.role === 'admin' ? 'Admin' : 'User';
+        const article = authState.role === 'admin' ? 'an' : 'a';
+        showAuthMsg(`This is a ${correctRoleLabel} account. Please choose "I'm ${article} ${correctRoleLabel}" to continue.`, "switch_account");
         setRole(authState.role, 'login');
         button.disabled = false;
         return;
