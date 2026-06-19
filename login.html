@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoBite - Login / Signup</title>
+  <meta name="description" content="EcoBite Login — Sign in or create an account to order rescued meals and reduce food waste." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Montserrat:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="CSS/login.css" />
+</head>
+<body>
+  <main>
+  <div id="left">
+    <div id="blob"></div>
+    <a href="EcoBite.html" id="logo">
+      <span class="material-symbols-rounded brand-icon">eco</span>
+      Eco<span>Bite</span>
+    </a>
+
+    <h1 id="slogan">
+      Save Food.<br>
+      <span>Save Money.</span><br>
+      Save the Planet.
+    </h1>
+
+    <p id="desc">Join thousands of Indians who order surplus meals from top hotels at up to 80% off every day.</p>
+
+    <div id="points">
+      <div class="point">
+        <div class="picon"><span class="material-symbols-rounded">restaurant</span></div>
+        <span class="ptext">Meals from premium hotels starting Rs. 59</span>
+      </div>
+      <div class="point">
+        <div class="picon"><span class="material-symbols-rounded">location_city</span></div>
+        <span class="ptext">32 cities across India</span>
+      </div>
+      <div class="point">
+        <div class="picon"><span class="material-symbols-rounded">recycling</span></div>
+        <span class="ptext">2.4 lakh+ meals rescued so far</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="box">
+      <div id="tabs">
+        <button class="tab on" id="logintab" data-tab="login">Login</button>
+        <button class="tab" id="signuptab" data-tab="signup">Sign Up</button>
+      </div>
+
+      <h2 id="formtitle">Welcome Back!</h2>
+      <p id="formsub">Login to find today's food deals near you</p>
+
+      <form id="loginform" class="show">
+        <div id="loginroles">
+          <div class="role on" id="luserrole" data-login-role="user">
+            <div class="ricon"><span class="material-symbols-rounded">person</span></div>
+            <div class="rname">I'm a User</div>
+          </div>
+          <div class="role" id="ladminrole" data-login-role="admin">
+            <div class="ricon"><span class="material-symbols-rounded">admin_panel_settings</span></div>
+            <div class="rname">I'm an Admin</div>
+          </div>
+        </div>
+
+        <div class="group">
+          <label for="lemail">Email Address</label>
+          <div class="inputwrap">
+            <span class="material-symbols-rounded">mail</span>
+            <input type="email" id="lemail" placeholder="you@example.com" />
+          </div>
+          <div class="err" id="emailerr">Please enter a valid email</div>
+        </div>
+
+        <div class="group">
+          <label for="lpass">Password</label>
+          <div class="inputwrap">
+            <span class="material-symbols-rounded">lock</span>
+            <input type="password" id="lpass" placeholder="Enter your password" />
+            <button type="button" class="eye material-symbols-rounded" data-password-target="lpass">visibility</button>
+          </div>
+          <div class="err" id="passerr">Password must be at least 6 characters</div>
+        </div>
+
+        <div id="forgot"><a href="#">Forgot Password?</a></div>
+        <button class="submit" type="submit">Login to EcoBite</button>
+
+        <div class="divider">or</div>
+
+        <button type="button" class="google" data-google-action="login">
+          <svg class="googleicon" viewBox="0 0 48 48" width="20" height="20"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.1 24.1 0 0 0 0 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+      </form>
+
+      <form id="signupform">
+        <div id="roles">
+          <div class="role on" id="userrole" data-signup-role="user">
+            <div class="ricon"><span class="material-symbols-rounded">person</span></div>
+            <div class="rname">I'm a User</div>
+          </div>
+          <div class="role" id="adminrole" data-signup-role="admin">
+            <div class="ricon"><span class="material-symbols-rounded">admin_panel_settings</span></div>
+            <div class="rname">I'm an Admin</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="group">
+            <label for="fname">First Name</label>
+            <div class="inputwrap">
+              <span class="material-symbols-rounded">badge</span>
+              <input type="text" id="fname" placeholder="Rahul" />
+            </div>
+            <div class="err" id="fnameerr">Enter your first name</div>
+          </div>
+          <div class="group">
+            <label for="lname">Last Name</label>
+            <div class="inputwrap">
+              <span class="material-symbols-rounded">badge</span>
+              <input type="text" id="lname" placeholder="Sharma" />
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <label for="semail">Email Address</label>
+          <div class="inputwrap">
+            <span class="material-symbols-rounded">mail</span>
+            <input type="email" id="semail" placeholder="you@example.com" />
+          </div>
+          <div class="err" id="semailerr">Please enter a valid email</div>
+        </div>
+
+        <div class="group">
+          <label for="phone">Phone Number</label>
+          <div class="inputwrap">
+            <span class="material-symbols-rounded">call</span>
+            <span class="prefix">+91</span>
+            <input type="tel" id="phone" placeholder="9876543210" maxlength="10" />
+          </div>
+          <div class="err" id="phoneerr">Enter a valid 10-digit number</div>
+        </div>
+
+        <div class="group fssai-group" id="fssaiGroup" style="display: none;">
+          <label for="fssai">FSSAI License Number <span class="required-star">*</span></label>
+          <div class="inputwrap">
+            <span class="material-symbols-rounded">verified_user</span>
+            <input type="text" id="fssai" placeholder="14-digit FSSAI License No." maxlength="14" />
+          </div>
+          <div class="err" id="fssaierr">Enter a valid 14-digit FSSAI license number</div>
+        </div>
+
+        <div class="group">
+          <label for="spass">Create Password</label>
+          <div class="inputwrap">
+            <span class="material-symbols-rounded">lock</span>
+            <input type="password" id="spass" placeholder="Min. 6 characters" />
+            <button type="button" class="eye material-symbols-rounded" data-password-target="spass">visibility</button>
+          </div>
+          <div class="err" id="spasserr">Password must be at least 6 characters</div>
+        </div>
+
+        <div class="checkrow">
+          <input type="checkbox" id="terms" />
+          <label for="terms">I agree to EcoBite's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        <div class="err" id="termserr">Please accept the terms to continue</div>
+
+        <button class="submit" type="submit">Create My Account</button>
+
+        <div class="divider">or</div>
+
+        <button type="button" class="google" data-google-action="signup">
+          <svg class="googleicon" viewBox="0 0 48 48" width="20" height="20"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.19a24.1 24.1 0 0 0 0 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+      </form>
+    </div>
+  </div>
+  </main>
+
+  <div id="loginToast" class="login-toast">
+    <span class="material-symbols-rounded">info</span>
+    <span></span>
+  </div>
+
+  <script type="module" src="JS/login.js"></script>
+</body>
+</html>

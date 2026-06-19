@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoBite — Save Food, Save Money, Save the Planet</title>
+  <meta name="description"
+    content="EcoBite — Rescue surplus meals from top hotels at up to 80% off. Order for delivery and help reduce food waste in your city." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Montserrat:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..700,0..1,0&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="CSS/EcoBite.css" />
+</head>
+
+<body>
+  <nav id="navbar">
+    <div id="navbox">
+      <a href="#" id="logo">
+        <span class="material-symbols-rounded brand-icon">eco</span>
+        Eco<span>Bite</span>
+      </a>
+
+      <div id="links">
+        <a href="#how">How It Works</a>
+        <a href="#listings">Hotels</a>
+        <a href="about.html">About</a>
+        <a href="list-your-hotel.html" id="partner">List Your Hotel</a>
+      </div>
+
+      <div id="right">
+
+        <button id="cart" aria-label="Open cart">
+          <span class="material-symbols-rounded">shopping_cart</span>
+          <span id="count">0</span>
+        </button>
+
+        <!-- Login button (visible when NOT logged in) -->
+        <button id="loginbtn">Login</button>
+
+        <!-- Profile dropdown (visible when logged in) -->
+        <div id="profileWrap" style="display:none;">
+          <button id="profileBtn" aria-label="Profile menu">
+            <span id="profileAvatar"></span>
+            <span id="profileName"></span>
+            <span class="material-symbols-rounded profileArrow">expand_more</span>
+          </button>
+          <div id="profileDropdown">
+            <div id="profileHeader">
+              <div id="profileBigAvatar"></div>
+              <div>
+                <div id="profileFullName"></div>
+                <div id="profileEmail"></div>
+              </div>
+            </div>
+            <div class="profileDivider"></div>
+            <a class="profileItem" href="my-orders.html">
+              <span class="material-symbols-rounded">restaurant</span> My Orders
+            </a>
+            <a class="profileItem" href="my-address.html">
+              <span class="material-symbols-rounded">location_on</span> My Addresses
+            </a>
+            <a class="profileItem" href="help.html">
+              <span class="material-symbols-rounded">help</span> Help
+            </a>
+            <div class="profileDivider"></div>
+            <button class="profileItem" id="logoutBtn">
+              <span class="material-symbols-rounded">logout</span> Logout
+            </button>
+          </div>
+        </div>
+
+        <button id="hamburger" aria-label="Menu">
+          <span class="material-symbols-rounded">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobileMenu">
+    <a href="#how" class="mobile-menu-link">How It Works</a>
+    <a href="" class="mobile-menu-link">Hotels</a>
+    <a href="about.html" class="mobile-menu-link">About</a>
+    <a href="list-your-hotel.html" id="mPartner">List Your Hotel</a>
+  </div>
+
+  <section id="hero">
+    <div id="blob1"></div>
+    <div id="blob2"></div>
+
+    <div id="herobox">
+      <div id="heroleft">
+        <div id="pill">
+          <span class="material-symbols-rounded">location_city</span>
+          Now in 32 cities across India
+        </div>
+        <h1 id="title">Great Food.<br><span>Half the Price.</span><br>Zero Waste.</h1>
+        <p id="sub">EcoBite rescues surplus meals from India's finest hotels, so you eat well, save money, and help the
+          planet.</p>
+
+        <div id="searchbox">
+          <span class="material-symbols-rounded">location_on</span>
+          <input type="text" id="search" placeholder="Search food or hotel..." />
+          <button id="findbtn">Find Food</button>
+        </div>
+
+        <div id="badges">
+          <span class="badge"><span class="material-symbols-rounded">verified</span> Eco Certified</span>
+          <span class="badge"><span class="material-symbols-rounded">local_shipping</span> Same-day Delivery</span>
+          <span class="badge"><span class="material-symbols-rounded">credit_card</span> UPI &amp; Cards</span>
+        </div>
+      </div>
+
+      <div id="heroright">
+        <div class="card1">
+          <img src="FOOD IMAGES/PBM.jpg" alt="Paneer Butter Masala" />
+          <div>
+            <div class="mini-title">Paneer Butter Masala</div>
+            <div><span class="old">Rs. 450</span> <span class="price">Rs. 99</span></div>
+          </div>
+        </div>
+
+        <div class="card2">
+          <span class="material-symbols-rounded">public</span>
+          <span>12 kg food saved today</span>
+        </div>
+
+        <img id="plate" src="FOOD IMAGES/PANEER TIKKA.webp" alt="Fresh rescue meal" />
+      </div>
+    </div>
+  </section>
+
+  <div id="stats" class="reveal">
+    <div class="stat reveal">
+      <span class="material-symbols-rounded staticon">restaurant</span>
+      <span class="statnum">2.4L+</span>
+      <span class="statlabel">Meals Saved</span>
+    </div>
+    <div class="stat reveal">
+      <span class="material-symbols-rounded staticon">hotel</span>
+      <span class="statnum">840+</span>
+      <span class="statlabel">Partner Hotels</span>
+    </div>
+    <div class="stat reveal">
+      <span class="material-symbols-rounded staticon">savings</span>
+      <span class="statnum">₹18Cr</span>
+      <span class="statlabel">Customer Savings</span>
+    </div>
+    <div class="stat reveal">
+      <span class="material-symbols-rounded staticon">map</span>
+      <span class="statnum">32 Cities</span>
+      <span class="statlabel">Across India</span>
+    </div>
+  </div>
+
+  <section id="listings">
+    <div id="top" class="reveal">
+      <div>
+        <h2 id="heading">Today's Rescue Deals</h2>
+        <p id="subheading">Fresh surplus meals available for home delivery tonight</p>
+      </div>
+      <div id="live"><span class="live-dot"></span> Live Now</div>
+    </div>
+
+    <div id="filters">
+      <div id="citygroup">
+        <!-- Cities will be injected here by JavaScript -->
+      </div>
+      <div id="catgroup">
+        <!-- Categories will be injected here by JavaScript -->
+      </div>
+    </div>
+
+    <div id="aiAssist">
+      <div class="ai-copy">
+        <span class="material-symbols-rounded">auto_awesome</span>
+        <div>
+          <h3>AI Meal Match</h3>
+          <p id="aiPickText">Filter or search, then let EcoBite pick the strongest rescue deal.</p>
+        </div>
+      </div>
+      <button id="aiPickBtn">Find Best Pick</button>
+    </div>
+
+    <div id="grid">
+      <!-- Listings will be injected here by JavaScript from live Firebase data -->
+    </div>
+  </section>
+
+  <section id="how" class="reveal">
+    <div id="howbox">
+      <h2 id="howtitle">How EcoBite Works</h2>
+      <p id="howsub">Simple. Fast. Sustainable.</p>
+
+      <div id="steps">
+        <div class="step reveal">
+          <div class="stepnum">01</div>
+          <span class="material-symbols-rounded stepicon">search</span>
+          <div class="steptitle">Browse Deals</div>
+          <div class="stepdesc">Find surplus meals from top hotels near you at up to 80% off.</div>
+        </div>
+        <div class="step reveal">
+          <div class="stepnum">02</div>
+          <span class="material-symbols-rounded stepicon">shopping_bag</span>
+          <div class="steptitle">Place Order</div>
+          <div class="stepdesc">Pick your meal, add your details, and pay securely.</div>
+        </div>
+        <div class="step reveal">
+          <div class="stepnum">03</div>
+          <span class="material-symbols-rounded stepicon">local_shipping</span>
+          <div class="steptitle">Home Delivery</div>
+          <div class="stepdesc">Relax at home while your rescued meal arrives in your selected window.</div>
+        </div>
+        <div class="step reveal">
+          <div class="stepnum">04</div>
+          <span class="material-symbols-rounded stepicon">public</span>
+          <div class="steptitle">Save the Planet</div>
+          <div class="stepdesc">Every rescued meal means less food waste and a better India.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer" class="reveal">
+    <div id="footbox">
+      <div id="footlogo">
+        <span class="material-symbols-rounded brand-icon">eco</span>
+        Eco<span>Bite</span>
+      </div>
+      <p id="footsub">Fighting food waste, one meal at a time.</p>
+      <div id="footlinks">
+        <a href="about.html">About</a>
+        <a href="career.html">Careers</a>
+        <a href="press.html">Press</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+      <div id="footsocial">
+        <a href="https://www.instagram.com/ecob.ite25?igsh=MTJyd2Fzbjg4YmwzOA==" aria-label="Instagram" class="social-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://twitter.com/ecobite" aria-label="X" class="social-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/ecobite" aria-label="LinkedIn" class="social-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1。771v20.451C0 23.227.792 24 1.771 24h20.451C23.207 24 24 23.227 24 22.222V1.771C24 .774 23.207 0 22.225 0z"/></svg>
+        </a>
+      </div>
+      <div id="copy">© 2024 EcoBite. All rights reserved.</div>
+    </div>
+  </footer>
+    <span class="material-symbols-rounded">smart_toy</span>
+  <button id="aiFab" aria-label="Chat with AI"></button>
+  <div id="aiChat">
+    <div id="aiChatHead">
+      <div><span class="material-symbols-rounded">smart_toy</span> EcoBite AI</div>
+      <button id="aiChatClose"><span class="material-symbols-rounded">close</span></button>
+    </div>
+    <div id="aiChatMessages"></div>
+    <div id="aiChatInput">
+      <input type="text" id="aiChatField" placeholder="Ask me about food deals..." />
+      <button id="aiChatSend"><span class="material-symbols-rounded">send</span></button>
+    </div>
+  </div>
+
+  <script type="module" src="JS/ECOBITE.js"></script>
+</body>
+
+</html>
