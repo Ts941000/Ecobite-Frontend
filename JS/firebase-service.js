@@ -74,7 +74,7 @@ async function loadFirebase() {
   if (initPromise) return initPromise;
 
   initPromise = (async () => {
-    const [appModule, authModule, firestoreModule, storageModule] = await Promise.all([
+    const [appModule, authModule, firestoreModule, storageModule, analyticsModule] = await Promise.all([
       import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-app.js`),
       import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-auth.js`),
       import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-firestore.js`),
@@ -86,7 +86,11 @@ async function loadFirebase() {
       ? appModule.getApps()[0]
       : appModule.initializeApp(firebaseConfig);
 
-      const analytics = analyticsModule.getAnalytics(firebaseApp);
+    try {
+      analyticsModule.getAnalytics(firebaseApp);
+    } catch (e) {
+      console.warn("Firebase Analytics init skipped:", e);
+    }
 
     auth = authModule.getAuth(firebaseApp);
     db = firestoreModule.getFirestore(firebaseApp);
