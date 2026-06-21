@@ -79,11 +79,14 @@ async function loadFirebase() {
       import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-auth.js`),
       import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-firestore.js`),
       import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-storage.js`),
+      import(`https://www.gstatic.com/firebasejs/${SDK_VERSION}/firebase-analytics.js`),
     ]);
 
     firebaseApp = appModule.getApps().length
       ? appModule.getApps()[0]
       : appModule.initializeApp(firebaseConfig);
+
+      const analytics = analyticsModule.getAnalytics(firebaseApp);
 
     auth = authModule.getAuth(firebaseApp);
     db = firestoreModule.getFirestore(firebaseApp);
