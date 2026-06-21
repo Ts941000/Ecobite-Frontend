@@ -5,6 +5,7 @@ export const firebaseConfig = {
   storageBucket: "ecobite-hx.firebasestorage.app",
   messagingSenderId: "84907421623",
   appId: "1:84907421623:web:5e4bfe774cc67795738232"
+  measurementId: "G-L3GQ3WXDH7",
 };
 
 export const firebaseCollections = {
