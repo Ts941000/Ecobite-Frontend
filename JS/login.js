@@ -149,7 +149,8 @@ async function validateSignup(event) {
     const name = [fname, lname].filter(Boolean).join(" ");
     const extra = role === "admin" ? { fssaiLicense: fssai } : {};
     const authState = await registerWithEmail({ email, password: pass, name, phone, role, ...extra });
-    const mode = getBackendMode() === "firebase" ? "Firebase" : "demo";
+    const backendMode = getBackendMode();
+    const mode = backendMode === "firebase" ? "Firebase" : backendMode === "express" ? "Express" : "demo";
     showAuthMsg(`Account created with ${mode} backend.`, "person_add");
     setTimeout(() => redirectByRole(authState), 500);
   } catch (error) {
