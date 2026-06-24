@@ -26,8 +26,10 @@ app.use('/api/orders', require('./routes/orderRoutes'));
 app.get('/', (req, res) => {
     res.send('ECOBITE Backend is running!');
 });
+// Health check route for Render
+app.get('/health', (req, res) => res.status(200).send('OK'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT, 10) || 5000;
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
