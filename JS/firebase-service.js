@@ -1,6 +1,36 @@
 // API Service to replace Firebase Client SDK
-// Now pointing to the SAME origin since Vercel hosts both Frontend and API
-const BASE_URL = '';
+// Vercel uses same-origin /api. Local HTML/Live Server uses backend on :5000.
+function cleanBaseUrl(value) {
+  return String(value || '').replace(/\/+$/, '');
+}
+
+function getStoredApiBase() {
+  try {
+    return localStorage.getItem('ecobite-api-base') || '';
+  } catch {
+    return '';
+  }
+}
+
+function resolveBaseUrl() {
+  const override = typeof window !== 'undefined'
+    ? (window.ECOBITE_API_BASE || getStoredApiBase())
+    : '';
+  if (override) return cleanBaseUrl(override);
+
+  if (typeof window === 'undefined') return '';
+
+  const { protocol, hostname, port } = window.location;
+  const isLocalHost = hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '';
+
+  if (protocol === 'file:' || (isLocalHost && port && port !== '5000')) {
+    return 'http://localhost:5000';
+  }
+
+  return '';
+}
+
+const BASE_URL = resolveBaseUrl();
 const API_URL = `${BASE_URL}/api`;
 const AUTH_KEY = 'ecobite-auth';
 const TOKEN_KEY = 'ecobite-token';
@@ -11,6 +41,26 @@ function getHeaders() {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {})
   };
+}
+
+async function readJsonResponse(res, fallbackMessage) {
+  const text = await res.text();
+  let data = {};
+
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      console.error('Non-JSON response:', text);
+      throw new Error(res.ok ? 'Invalid response format' : fallbackMessage);
+    }
+  }
+
+  if (!res.ok) {
+    throw new Error(data.message || data.error || fallbackMessage);
+  }
+
+  return data;
 }
 
 // ---------------- AUTH ----------------
@@ -39,16 +89,21 @@ export function clearLocalAuth() {
 
 export async function initFirebase() { return true; } // Dummy
 export async function readUserProfile(uid) {
-  const res = await fetch(`${API_URL}/auth/profile`, { headers: getHeaders() });
-  if (!res.ok) return getLocalAuth();
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/auth/profile`, { headers: getHeaders() });
+    return await readJsonResponse(res, 'Could not load profile');
+  } catch (error) {
+    console.warn('Profile load failed:', error.message);
+    return getLocalAuth();
+  }
 }
 export async function writeUserProfile(uid, profile) {
-  await fetch(`${API_URL}/auth/profile`, {
+  const res = await fetch(`${API_URL}/auth/profile`, {
     method: 'PUT',
     headers: getHeaders(),
     body: JSON.stringify(profile)
   });
+  return readJsonResponse(res, 'Could not update profile');
 }
 
 export async function getSignedInUser() {
@@ -65,21 +120,13 @@ export async function requireAuth(redirectTo = "login.html", allowedRoles = []) 
   return user;
 }
 
-export async function registerWithEmail({ email, password, name, phone, role }) {
+export async function registerWithEmail({ email, password, name, phone, role, fssaiLicense }) {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password, name, role, phone })
+    body: JSON.stringify({ email, password, name, role, phone, fssaiLicense })
   });
-  const text = await res.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch (e) {
-    console.error('Non-JSON response:', text);
-    throw new Error(res.ok ? 'Invalid response format' : 'Server error');
-  }
-  if (!res.ok) throw new Error(data.error || 'Registration failed');
+  const data = await readJsonResponse(res, 'Registration failed');
   return saveLocalAuth(data, data.token);
 }
 
@@ -89,15 +136,7 @@ export async function loginWithEmail({ email, password, role }) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password, role })
   });
-  const text = await res.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch (e) {
-    console.error('Non-JSON response:', text);
-    throw new Error(res.ok ? 'Invalid response format' : 'Server error');
-  }
-  if (!res.ok) throw new Error(data.message || "Login failed");
+  const data = await readJsonResponse(res, 'Login failed');
   return saveLocalAuth(data, data.token);
 }
 
@@ -121,11 +160,12 @@ export async function loadCart() {
 }
 
 export async function saveCart(items) {
-  await fetch(`${API_URL}/cart`, {
+  const res = await fetch(`${API_URL}/cart`, {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify({ items })
   });
+  return readJsonResponse(res, 'Could not save cart');
 }
 
 export function clearCart() { saveCart([]); }
@@ -138,13 +178,17 @@ export async function createOrder(order) {
     headers: getHeaders(),
     body: JSON.stringify(order)
   });
-  return res.json();
+  return readJsonResponse(res, 'Could not create order');
 }
 
 export async function listenOrders(callback) {
   // Since we don't have websockets, we simulate it with an initial fetch
-  const res = await fetch(`${API_URL}/orders`, { headers: getHeaders() });
-  if (res.ok) callback(await res.json());
+  try {
+    const res = await fetch(`${API_URL}/orders`, { headers: getHeaders() });
+    if (res.ok) callback(await res.json());
+  } catch (error) {
+    console.warn('Orders load failed:', error.message);
+  }
   return () => {}; // return unsubscribe function
 }
 
@@ -153,11 +197,12 @@ export async function listenOrdersByOwner(ownerId, callback) {
 }
 
 export async function updateOrderStatus(orderId, status, extraData = {}) {
-  await fetch(`${API_URL}/orders/${orderId}`, {
+  const res = await fetch(`${API_URL}/orders/${encodeURIComponent(orderId)}`, {
     method: 'PUT',
     headers: getHeaders(),
     body: JSON.stringify({ status, ...extraData })
   });
+  return readJsonResponse(res, 'Could not update order');
 }
 
 // ---------------- LISTINGS ----------------
@@ -180,17 +225,22 @@ export async function listenListingsByOwner(ownerId, callback) {
 }
 
 export async function saveListing(listing) {
-  const res = await fetch(`${API_URL}/listings`, {
-    method: 'POST',
+  const hasId = Boolean(listing.id);
+  const url = hasId ? `${API_URL}/listings/${encodeURIComponent(listing.id)}` : `${API_URL}/listings`;
+  const res = await fetch(url, {
+    method: hasId ? 'PUT' : 'POST',
     headers: getHeaders(),
     body: JSON.stringify(listing)
   });
-  return res.json();
+  return readJsonResponse(res, 'Could not save listing');
 }
 
 export async function deleteListing(id) {
-  // Not implemented on backend yet
-  console.log("Delete listing", id);
+  const res = await fetch(`${API_URL}/listings/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+    headers: getHeaders(),
+  });
+  return readJsonResponse(res, 'Could not delete listing');
 }
 
 export async function deductInventory(listingId, quantity) {
@@ -202,20 +252,16 @@ export async function uploadListingImage(file) {
   if (!file) return null;
   const formData = new FormData();
   formData.append('image', file);
+  const token = localStorage.getItem(TOKEN_KEY);
 
   const res = await fetch(`${API_URL}/upload`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`
-    },
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: formData
   });
 
-  const data = await res.json();
-  if (res.ok) {
-    return `${BASE_URL}${data.imageUrl}`;
-  }
-  throw new Error("Upload failed");
+  const data = await readJsonResponse(res, 'Upload failed');
+  return `${BASE_URL}${data.imageUrl}`;
 }
 
 export function getLocalListings() { return []; }

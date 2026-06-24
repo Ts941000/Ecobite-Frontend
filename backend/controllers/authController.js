@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { db } = require('../config/firebase');
+const { JWT_SECRET } = require('../config/jwt');
 
 // Generate JWT Token
 const generateToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET, {
+  return jwt.sign({ id, role }, JWT_SECRET, {
     expiresIn: '30d',
   });
 };
@@ -14,15 +15,17 @@ const generateToken = (id, role) => {
 // @access  Public
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, phone } = req.body;
+    const { name, email, password, role, phone, fssaiLicense } = req.body;
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+    const accountRole = ['admin', 'hotel'].includes(role) ? role : 'user';
 
-    if (!name || !email || !password) {
+    if (!name || !normalizedEmail || !password) {
       return res.status(400).json({ message: 'Please add all fields' });
     }
 
     // Check if user exists in Firestore
     const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('email', '==', email).get();
+    const snapshot = await usersRef.where('email', '==', normalizedEmail).get();
 
     // Hash password
     const salt = await bcrypt.genSalt(10);
@@ -41,6 +44,8 @@ const registerUser = async (req, res) => {
         await usersRef.doc(docId).update({
           password: hashedPassword,
           name: name || existingUser.name,
+          phone: phone || existingUser.phone || null,
+          fssaiLicense: accountRole === 'admin' ? (fssaiLicense || existingUser.fssaiLicense || null) : existingUser.fssaiLicense || null,
           updatedAt: new Date().toISOString()
         });
 
@@ -48,8 +53,10 @@ const registerUser = async (req, res) => {
           uid: existingUser.uid || docId,
           name: name || existingUser.name,
           email: existingUser.email,
-          role: existingUser.role,
-          token: generateToken(existingUser.uid || docId, existingUser.role),
+          role: existingUser.role || accountRole,
+          phone: phone || existingUser.phone || null,
+          fssaiLicense: fssaiLicense || existingUser.fssaiLicense || null,
+          token: generateToken(existingUser.uid || docId, existingUser.role || accountRole),
         });
       } else {
         return res.status(400).json({ message: 'User already exists' });
@@ -61,10 +68,11 @@ const registerUser = async (req, res) => {
     const newUser = {
       uid: newUserRef.id,
       name,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
-      role: role || 'user', // Default role is user
+      role: accountRole,
       phone: phone || null,
+      fssaiLicense: accountRole === 'admin' ? (fssaiLicense || null) : null,
       createdAt: new Date().toISOString()
     };
 
@@ -76,11 +84,12 @@ const registerUser = async (req, res) => {
       email: newUser.email,
       role: newUser.role,
       phone: newUser.phone,
+      fssaiLicense: newUser.fssaiLicense,
       token: generateToken(newUser.uid, newUser.role),
     });
   } catch (error) {
-    console.error('Login Error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Register Error:', error);
+    res.status(500).json({ message: error.message || 'Server error', error: error.message });
   }
 };
 
@@ -90,18 +99,25 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+
+    if (!normalizedEmail || !password) {
+      return res.status(400).json({ message: 'Please enter email and password' });
+    }
 
     // Check for user email
     const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('email', '==', email).get();
+    const snapshot = await usersRef.where('email', '==', normalizedEmail).get();
 
     if (snapshot.empty) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     let user;
+    let docId;
     snapshot.forEach(doc => {
       user = doc.data();
+      docId = doc.id;
     });
 
     // Check if user has a password field (legacy Firebase users might not)
@@ -111,20 +127,21 @@ const loginUser = async (req, res) => {
 
     // Check password
     if (user && (await bcrypt.compare(password, user.password))) {
+      const uid = user.uid || docId;
       res.json({
-        uid: user.uid,
+        uid,
         name: user.name,
         email: user.email,
-        role: user.role,
+        role: user.role || 'user',
         phone: user.phone || null,
-        token: generateToken(user.uid, user.role),
+        token: generateToken(uid, user.role || 'user'),
       });
     } else {
       res.status(400).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
     console.error('Login Error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: error.message || 'Server error', error: error.message });
   }
 };
 
@@ -145,7 +162,7 @@ const getUserProfile = async (req, res) => {
     delete user.password;
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: error.message || 'Server error', error: error.message });
   }
 };
 
@@ -171,7 +188,7 @@ const updateUserProfile = async (req, res) => {
     
     res.json({ message: 'Profile updated successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: error.message || 'Server error', error: error.message });
   }
 };
 

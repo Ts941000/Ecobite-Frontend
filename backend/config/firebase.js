@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 let serviceAccount;
+let db;
 
 try {
   if (process.env.FIREBASE_SERVICE_ACCOUNT) {
@@ -22,10 +23,16 @@ try {
   initializeApp({
     credential: cert(serviceAccount)
   });
+
+  db = getFirestore();
 } catch (error) {
   console.error("FIREBASE INITIALIZATION ERROR:", error.message);
+  // Create a dummy db that throws an error ONLY when queried, to prevent server crash on boot
+  db = new Proxy({}, {
+    get: function() {
+      throw new Error(`Firebase failed to initialize: ${error.message}`);
+    }
+  });
 }
-
-const db = getFirestore();
 
 module.exports = { db };
