@@ -71,8 +71,15 @@ export async function registerWithEmail({ email, password, name, phone, role }) 
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password, name, role, phone })
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Registration failed");
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('Non-JSON response:', text);
+    throw new Error(res.ok ? 'Invalid response format' : 'Server error');
+  }
+  if (!res.ok) throw new Error(data.error || 'Registration failed');
   return saveLocalAuth(data, data.token);
 }
 
@@ -82,7 +89,14 @@ export async function loginWithEmail({ email, password, role }) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password, role })
   });
-  const data = await res.json();
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('Non-JSON response:', text);
+    throw new Error(res.ok ? 'Invalid response format' : 'Server error');
+  }
   if (!res.ok) throw new Error(data.message || "Login failed");
   return saveLocalAuth(data, data.token);
 }
