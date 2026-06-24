@@ -1,6 +1,6 @@
 // API Service to replace Firebase Client SDK
-// Change BASE_URL to your deployed backend URL when deploying to Render (e.g., 'https://your-backend.onrender.com')
-const BASE_URL = 'https://ecobite-frontend-a01t.onrender.com';
+// Now pointing to the SAME origin since Vercel hosts both Frontend and API
+const BASE_URL = '';
 const API_URL = `${BASE_URL}/api`;
 const AUTH_KEY = 'ecobite-auth';
 const TOKEN_KEY = 'ecobite-token';
