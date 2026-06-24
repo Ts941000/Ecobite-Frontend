@@ -31,7 +31,7 @@ app.get('/health', (req, res) => res.status(200).send('OK'));
 
 const PORT = parseInt(process.env.PORT, 10) || 5000;
 
-if (process.env.NODE_ENV !== 'production') {
+if (require.main === module) {
     app.listen(PORT, '0.0.0.0', () => {
         console.log(`Server is running on port ${PORT}`);
     });
