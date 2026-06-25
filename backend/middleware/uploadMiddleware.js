@@ -2,28 +2,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const uploadDir = process.env.VERCEL 
-  ? path.join('/tmp', 'uploads') 
-  : path.join(__dirname, '..', 'uploads');
-
-try {
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
-} catch (error) {
-  console.warn("Could not create uploads directory:", error.message);
-}
-
-// Set storage engine
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir); // Uploads will be saved in the uploadDir
-  },
-  filename: function (req, file, cb) {
-    // Generate unique filename: fieldname-timestamp.extension
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
+// We now use memoryStorage because we will upload the buffer directly to Firebase Storage.
+// This prevents Vercel serverless functions from deleting local files.
+const storage = multer.memoryStorage();
 
 // Check File Type
 function checkFileType(file, cb) {

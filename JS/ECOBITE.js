@@ -690,7 +690,7 @@ function renderBackendListings(listings) {
         data-city="${city}" data-place="${place}" data-type="${type}" data-original="${original}"
         data-sale="${sale}" data-stars="${stars}" data-time="${time}" data-qty="${qty}" data-image="${image}" data-owner-id="${ownerId}">
         <div class="top ${accent}">
-          <img class="dishimg" src="${image}" alt="${name}" />
+          <img class="dishimg" src="${image}" alt="${name}" loading="lazy" />
           <span class="tag1 ${accent}">${discount}% OFF</span>
           <span class="tag2 ${type === "NonVeg" ? "nonvegtype" : "vegtype"}">${typeLabel}</span>
         </div>

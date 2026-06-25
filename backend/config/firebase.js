@@ -1,10 +1,12 @@
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
+const { getStorage } = require('firebase-admin/storage');
 const fs = require('fs');
 const path = require('path');
 
 let serviceAccount;
 let db;
+let bucket;
 
 try {
   if (process.env.FIREBASE_SERVICE_ACCOUNT) {
@@ -21,10 +23,12 @@ try {
   }
 
   initializeApp({
-    credential: cert(serviceAccount)
+    credential: cert(serviceAccount),
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${serviceAccount.project_id}.appspot.com`
   });
 
   db = getFirestore();
+  bucket = getStorage().bucket();
 } catch (error) {
   console.error("FIREBASE INITIALIZATION ERROR:", error.message);
   // Create a dummy db that throws an error ONLY when queried, to prevent server crash on boot
@@ -35,4 +39,4 @@ try {
   });
 }
 
-module.exports = { db };
+module.exports = { db, bucket };
