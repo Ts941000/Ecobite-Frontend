@@ -1,9 +1,9 @@
-/* ── Auth gate: redirect to login if not signed in ── */
 import {
   createOrder,
   loadCart as loadBackendCart,
   requireAuth,
   saveCart as saveBackendCart,
+  getListings
 } from "./firebase-service.js";
 
 const currentUser = await requireAuth("login.html", ["user"]);
@@ -38,15 +38,11 @@ const coupons = {
 };
 
 /* ── All available food items (for AI suggestions) ── */
-const allFoodItems = [
-  { id: "butter-chicken-thali", name: "Butter Chicken Thali", hotel: "Taj Palace Hotel", place: "Connaught Place, Delhi", type: "Non-Veg", original: 450, sale: 149, time: "28-35 min", image: "FOOD IMAGES/MALAI CHAAP.avif" },
-  { id: "chicken-biryani", name: "Chicken Biryani", hotel: "Royal Biryani House", place: "Banjara Hills, Hyderabad", type: "Non-Veg", original: 399, sale: 129, time: "32-40 min", image: "FOOD IMAGES/PANEER TIKKA.webp" },
-  { id: "dal-makhani", name: "Dal Makhani Combo", hotel: "Punjabi Rasoi", place: "Andheri West, Mumbai", type: "Veg", original: 320, sale: 99, time: "25-30 min", image: "FOOD IMAGES/PBM.jpg" },
-  { id: "paneer-butter-masala", name: "Paneer Butter Masala", hotel: "Green Leaf Kitchen", place: "Indiranagar, Bengaluru", type: "Veg", original: 360, sale: 119, time: "30-38 min", image: "FOOD IMAGES/PBM.jpg" },
-  { id: "rajma-rice", name: "Rajma Rice Bowl", hotel: "Home Plate Co.", place: "C-Scheme, Jaipur", type: "Veg", original: 240, sale: 79, time: "22-28 min", image: "FOOD IMAGES/PANEER TIKKA.webp" },
-  { id: "malai-chaap", name: "Malai Chaap", hotel: "Delhi Darbar", place: "Karol Bagh, Delhi", type: "Veg", original: 280, sale: 89, time: "20-25 min", image: "FOOD IMAGES/MALAI CHAAP.avif" },
-  { id: "paneer-tikka", name: "Paneer Tikka", hotel: "Tikka Town", place: "Koramangala, Bengaluru", type: "Veg", original: 300, sale: 109, time: "25-30 min", image: "FOOD IMAGES/PANEER TIKKA.webp" },
-];
+let allFoodItems = [];
+getListings().then(data => {
+  allFoodItems = data;
+  render(); // Re-render to show suggestions
+});
 
 function getCart() {
   try {
@@ -238,35 +234,47 @@ function updateAiSuggestion() {
 
   const cartIds = new Set(cart.map((item) => item.id));
   const hasVeg = cart.some((item) => item.type === "Veg");
-  const hasNonVeg = cart.some((item) => item.type === "Non-Veg");
+  const hasNonVeg = cart.some((item) => item.type === "NonVeg" || item.type === "Non-Veg");
 
-  // Prefer complementary type, then best discount
-  const candidates = allFoodItems.filter((item) => !cartIds.has(item.id));
+  // Filter only active, available items from the database that are not in cart
+  const candidates = allFoodItems.filter((item) => {
+    return !cartIds.has(item.id) && 
+           item.status !== "soldout" && 
+           Number(item.qty || 1) > 0 && 
+           item.ownerId; // Ensure it's a real restaurant item
+  });
+
   if (candidates.length === 0) {
     suggestEl.style.display = "none";
     return;
   }
 
   const scored = candidates.map((item) => {
-    const discountPct = ((item.original - item.sale) / item.original) * 100;
+    const original = Number(item.original || 0);
+    const sale = Number(item.sale || 0);
+    const discountPct = original > 0 ? ((original - sale) / original) * 100 : 0;
+    
     let bonus = 0;
     // Complementary type bonus
-    if (hasVeg && !hasNonVeg && item.type === "Non-Veg") bonus = 15;
+    if (hasVeg && !hasNonVeg && (item.type === "NonVeg" || item.type === "Non-Veg")) bonus = 15;
     if (hasNonVeg && !hasVeg && item.type === "Veg") bonus = 15;
-    return { item, score: discountPct + bonus };
+    return { item, score: discountPct + bonus, original, sale };
   });
 
   scored.sort((a, b) => b.score - a.score);
-  const pick = scored[0].item;
+  const { item: pick, original, sale } = scored[0];
+  const image = pick.image || "FOOD IMAGES/dm.jpg.jpeg";
+  const name = pick.name || "Special Item";
+  const hotel = pick.hotel || "EcoBite Partner";
 
   suggestEl.style.display = "block";
   suggestCard.innerHTML = `
     <div class="suggestItem">
-      <img src="${pick.image}" alt="${pick.name}" />
+      <img src="${image}" alt="${name}" />
       <div class="suggestInfo">
-        <div class="sname">${pick.name}</div>
-        <div class="shotel">${pick.hotel}</div>
-        <div class="sprice">Rs. ${pick.sale}<span class="sold">Rs. ${pick.original}</span></div>
+        <div class="sname">${name}</div>
+        <div class="shotel">${hotel}</div>
+        <div class="sprice">Rs. ${sale}<span class="sold">Rs. ${original}</span></div>
       </div>
       <button class="suggestAdd" data-suggest-id="${pick.id}">+ Add</button>
     </div>
@@ -280,11 +288,18 @@ function addSuggestedItem(id) {
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ ...item, qty: 1 });
+    // Normalizing item structure for cart
+    const cartItem = {
+      ...item,
+      qty: 1,
+      original: Number(item.original || 0),
+      sale: Number(item.sale || 0)
+    };
+    cart.push(cartItem);
   }
   saveCart();
   render();
-  showToast(`${item.name} added to cart`, "add_shopping_cart");
+  showToast(`${item.name || 'Item'} added to cart`, "add_shopping_cart");
 }
 
 function selectPay(method) {
