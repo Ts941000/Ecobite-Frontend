@@ -43,6 +43,7 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/listings', require('./routes/listingRoutes'));
 app.use('/api/cart', require('./routes/cartRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
+app.use('/api/ai', require('./routes/aiRoutes'));
 
 // API Test route
 app.get('/api/test', (req, res) => {

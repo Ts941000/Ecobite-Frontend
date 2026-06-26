@@ -10,41 +10,24 @@ const CART_KEY = "ecobite-cart";
 const AUTH_KEY = "ecobite-auth";
 
 /* ══════════════════════════════════════════════════
-   Gemini AI API Integration
+   AI API Integration (via Backend)
    ══════════════════════════════════════════════════ */
-const GEMINI_API_KEY = ['AQ','Ab8RN6J24zWj_Dim8RKp4CARi7UCJoDY-c6AFFOaFBN1Qk6q9g'].join('.');
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
-
 async function callGeminiAI(prompt, systemText = null) {
   try {
-    const payload = {
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.6,
-        maxOutputTokens: 150,
-      },
-    };
+    const API_BASE = window.ECOBITE_API_BASE || localStorage.getItem('ecobite-api-base') || '';
     
-    if (systemText) {
-      payload.systemInstruction = { parts: [{ text: systemText }] };
-    }
-
-    const response = await fetch(GEMINI_API_URL, {
+    const response = await fetch(`${API_BASE}/api/ai/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ prompt, systemText }),
     });
     
     if (!response.ok) throw new Error(`API error: ${response.status}`);
     const data = await response.json();
-    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    
-    // Strip markdown to ensure clean UI (no bold, asterisks, hashes)
-    text = text.replace(/[*_`#]/g, "");
-    return text.trim() || "Sorry, I couldn't generate a response.";
+    return data.reply;
   } catch (error) {
-    console.error("Gemini API error:", error);
-    return null; // null means fallback to local logic
+    console.error("AI API error:", error);
+    return null; // fallback to local logic
   }
 }
 
